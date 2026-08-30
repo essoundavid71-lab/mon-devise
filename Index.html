@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Business Tech - Devis Complet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+        .carte {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 380px;
+            width: 100%;
+        }
+        h1 {
+            color: #38bdf8;
+            font-size: 20px;
+            text-align: center;
+        }
+        label.titre-section {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px 0;
+            border-radius: 6px;
+            background-color: #0f172a;
+            color: white;
+            border: 1px solid #475569;
+        }
+        .option-checkbox {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            background-color: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+        .option-checkbox input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        #resultat {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #0f172a;
+            color: #38bdf8;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            display: none;
+        }
+        #btnWhatsApp {
+            display: none;
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="carte">
+        <h1>🚀 Devis Sur-Mesure</h1>
+
+        <label class="titre-section">1. Type de projet de base :</label>
+        <select id="typeProjet">
+            <option value="100">Site Vitrine Simple (100 $)</option>
+            <option value="250">Boutique en Ligne (250 $)</option>
+            <option value="400">Application Mobile (400 $)</option>
+        </select>
+
+        <label class="titre-section">2. Options supplémentaires :</label>
+        
+        <div class="option-checkbox">
+            <input type="checkbox" id="optionHebergement" value="50">
+            <label for="optionHebergement">🌐 Nom de domaine & Hébergement (+50 $)</label>
+        </div>
+
+        <div class="option-checkbox">
+            <input type="checkbox" id="optionLogo" value="30">
+            <label for="optionLogo">🎨 Création de Logo (+30 $)</label>
+        </div>
+
+        <button onclick="calculerDevis()">Calculer le Total</button>
+
+        <div id="resultat"></div>
+        
+        <a id="btnWhatsApp" href="#" target="_blank">📲 Commander sur WhatsApp</a>
+    </div>
+
+    <script>
+        function calculerDevis() {
+            // 1. Récupérer le projet de base
+            let select = document.getElementById("typeProjet");
+            let prixBase = parseInt(select.value);
+            let nomProjet = select.options[select.selectedIndex].text;
+
+            let total = prixBase;
+            let détailsOptions = [];
+
+            // 2. Vérifier les cases cochées
+            let chkHebergement = document.getElementById("optionHebergement");
+            if (chkHebergement.checked) {
+                total += parseInt(chkHebergement.value);
+                détailsOptions.push("Hébergement (+50$)");
+            }
+
+            let chkLogo = document.getElementById("optionLogo");
+            if (chkLogo.checked) {
+                total += parseInt(chkLogo.value);
+                détailsOptions.push("Logo (+30$)");
+            }
+
+            // 3. Afficher le total à l'écran
+            let zoneResultat = document.getElementById("resultat");
+            zoneResultat.style.display = "block";
+            zoneResultat.innerText = "Total estimé : " + total + " $";
+
+            // 4. Préparer le message WhatsApp
+            let monNumero = "22943973267"; // Votre numéro configuré !
+            
+            let texteOptions = détailsOptions.length > 0 ? " avec " + détailsOptions.join(" et ") : "";
+            let message = "Bonjour, je souhaite commander : " + nomProjet + texteOptions + ". Total : " + total + " $";
+            
+            let urlWhatsApp = "https://api.whatsapp.com/send?phone=" + monNumero + "&text=" + encodeURIComponent(message);
+
+            let btnWA = document.getElementById("btnWhatsApp");
+            btnWA.href = urlWhatsApp;
+            btnWA.style.display = "block";
+        }
+    </script>
+
+</body>
+  </html>￼Enter
